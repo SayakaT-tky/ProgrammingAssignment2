@@ -13,7 +13,7 @@ makeCacheMatrix <- function(x = matrix()) {
   get<-function() x ## temporal assignment of matrix'x' to be referred
   setinv<-function(inverse) inv<<-inverse
   getinv<-function() inv
-  cacheM<-list (set=set, get=get, setmean=setmean, getmean=getmean)
+  cacheM<-list (set=set, get=get, setinv=setinv, getmean=getmean)
   
 
 }
