@@ -13,9 +13,7 @@ makeCacheMatrix <- function(x = matrix()) {
   get<-function() x ## temporal assignment of matrix'x' to be referred
   setinv<-function(inverse) inv<<-inverse
   getinv<-function() inv
-  cacheM<-list (set=set, get=get, setinv=setinv, getinv=getinv)
-  
-
+  M<<-list (set=set, get=get, setinv=setinv, getinv=getinv) ## assigns the list to a temporal object in the parent environment
 }
 
 
@@ -23,13 +21,14 @@ makeCacheMatrix <- function(x = matrix()) {
 ## while it first tries to find whether there is the cache of the inverse recorded before.
 
 cacheSolve <- function(x, ...) {
-        inv<-cacheM$getinv()
+        inv<-M$getinv()     ## this expression tries to find if the inverse is cached
         if(!is.null(inv)){  ## this condition checks if the inverse is cached
           message("getting cached data")
-          return(inv) ## returnes cached inverse and get out from the function
+          return(inv)       ## returnes cached inverse and get out from the function
         }
-        data <-cacheM$get() ## gets the original matrix data from 'makeCacheMatrix'
+        data <-M$get()       ## gets the original matrix data from 'makeCacheMatrix'
         inv<-solve(data,...) ## calculates the inverse
-        cacheM$setmean(inv) ## records the cache
-        inv ## returnes the inverse of the given matrix
+        M$setinv(inv)        ## records the cache
+        inv                  ## returnes the inverse of the given matrix
+        
 }
